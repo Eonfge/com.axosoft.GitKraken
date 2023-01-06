@@ -1,19 +1,19 @@
 {
-    "id": "com.axosoft.GitKraken",
-    "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "22.08",
-    "sdk": "org.freedesktop.Sdk",
-    "sdk-extensions": [
+    "id":"com.axosoft.GitKraken",
+    "runtime":"org.freedesktop.Sdk",
+    "runtime-version":"22.08",
+    "sdk":"org.freedesktop.Sdk",
+    "sdk-extensions":[
         "org.freedesktop.Sdk.Extension.golang"
     ],
-    "base": "org.electronjs.Electron2.BaseApp",
-    "base-version": "22.08",
-    "command": "gitkraken",
-    "tags": [
+    "base":"org.electronjs.Electron2.BaseApp",
+    "base-version":"22.08",
+    "command":"gitkraken",
+    "tags":[
         "proprietary"
     ],
-    "separate-locales": false,
-    "finish-args": [
+    "separate-locales":false,
+    "finish-args":[
         "--require-version=0.11.1",
         "--share=ipc",
         "--socket=x11",
@@ -32,13 +32,13 @@
         "--talk-name=org.freedesktop.Notifications",
         "--talk-name=org.freedesktop.secrets"
     ],
-    "build-options": {
-        "append-path": "/usr/lib/sdk/golang/bin"
+    "build-options":{
+        "append-path":"/usr/lib/sdk/golang/bin"
     },
-    "modules": [
+    "modules":[
         {
-            "name": "ImageMagick",
-            "config-opts": [
+            "name":"ImageMagick",
+            "config-opts":[
                 "--enable-static=no",
                 "--with-modules",
                 "--disable-docs",
@@ -68,48 +68,48 @@
                 "--without-xml",
                 "--without-zlib"
             ],
-            "cleanup": [
+            "cleanup":[
                 "*"
             ],
-            "sources": [
+            "sources":[
                 {
-                    "type": "archive",
-                    "url": "https://imagemagick.org/archive/releases/ImageMagick-7.0.10-7.tar.xz",
-                    "sha256": "7a0365e20eeef2129cb8ffee1acf1d21cdbc2ea8b57ce2941c6ca0e935d4f843"
+                    "type":"archive",
+                    "url":"https://imagemagick.org/archive/releases/ImageMagick-7.0.10-7.tar.xz",
+                    "sha256":"7a0365e20eeef2129cb8ffee1acf1d21cdbc2ea8b57ce2941c6ca0e935d4f843"
                 }
             ]
         },
         "shared-modules/libsecret/libsecret.json",
         {
-            "name": "krb5",
-            "subdir": "src",
-            "config-opts": [
+            "name":"krb5",
+            "subdir":"src",
+            "config-opts":[
                 "--localstatedir=/var/lib",
                 "--sbindir=${FLATPAK_DEST}/bin",
                 "--disable-static",
                 "--disable-rpath"
             ],
-            "sources": [
+            "sources":[
                 {
-                    "type": "archive",
-                    "url": "https://github.com/krb5/krb5/archive/refs/tags/krb5-1.20.1-final.tar.gz",
-                    "sha256": "ec3861c3bec29aa8da9281953c680edfdab1754d1b1db8761c1d824e4b25496a",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 13287,
-                        "stable-only": true,
-                        "url-template": "https://github.com/krb5/krb5/archive/refs/tags/krb5-$version.tar.gz"
+                    "type":"archive",
+                    "url":"https://github.com/krb5/krb5/archive/refs/tags/krb5-1.20.1-final.tar.gz",
+                    "sha256":"ec3861c3bec29aa8da9281953c680edfdab1754d1b1db8761c1d824e4b25496a",
+                    "x-checker-data":{
+                        "type":"anitya",
+                        "project-id":13287,
+                        "stable-only":true,
+                        "url-template":"https://github.com/krb5/krb5/archive/refs/tags/krb5-$version.tar.gz"
                     }
                 },
                 {
-                    "type": "shell",
-                    "dest": "src",
-                    "commands": [
+                    "type":"shell",
+                    "dest":"src",
+                    "commands":[
                         "autoreconf -si"
                     ]
                 }
             ],
-            "cleanup": [
+            "cleanup":[
                 "/bin",
                 "/include",
                 "/lib/pkgconfig",
@@ -119,21 +119,21 @@
             ]
         },
         {
-            "name": "krb5-config",
-            "buildsystem": "simple",
-            "build-commands": [
+            "name":"krb5-config",
+            "buildsystem":"simple",
+            "build-commands":[
                 "install -Dm0644 krb5.conf -t /app/etc/"
             ],
-            "sources": [
+            "sources":[
                 {
-                    "type": "file",
-                    "path": "files/krb5/krb5.conf"
+                    "type":"file",
+                    "path":"files/krb5/krb5.conf"
                 }
             ]
         },
         {
-            "name": "pcsc-lite",
-            "config-opts": [
+            "name":"pcsc-lite",
+            "config-opts":[
                 "--disable-libudev",
                 "--disable-libsystemd",
                 "--without-systemdsystemunitdir",
@@ -141,102 +141,114 @@
                 "--disable-usb",
                 "--disable-documentation"
             ],
-            "cleanup": [
+            "cleanup":[
                 "/include",
                 "/lib/pkgconfig"
             ],
-            "post-install": [
+            "post-install":[
                 "rm /app/sbin/pcscd",
                 "rmdir /app/sbin || true"
             ],
-            "sources": [
+            "sources":[
                 {
-                    "type": "archive",
-                    "url": "https://salsa.debian.org/rousseau/PCSC/-/archive/1.9.9/PCSC-1.9.9.tar.bz2",
-                    "sha256": "09067c3d807ab11509565899b7a46aec8dffd9e14bee9e6e2cdfddd9f8f49173",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 2611,
-                        "url-template": "https://salsa.debian.org/rousseau/PCSC/-/archive/$version/PCSC-$version.tar.bz2"
+                    "type":"archive",
+                    "url":"https://salsa.debian.org/rousseau/PCSC/-/archive/1.9.9/PCSC-1.9.9.tar.bz2",
+                    "sha256":"09067c3d807ab11509565899b7a46aec8dffd9e14bee9e6e2cdfddd9f8f49173",
+                    "x-checker-data":{
+                        "type":"anitya",
+                        "project-id":2611,
+                        "url-template":"https://salsa.debian.org/rousseau/PCSC/-/archive/$version/PCSC-$version.tar.bz2"
                     }
                 }
             ]
         },
         {
-            "name": "git-lfs",
-            "build-options": {
-                "env": {
-                    "GO111MODULE": "on",
-                    "GOFLAGS": "-mod=vendor"
-                }
-            },
-            "buildsystem": "simple",
-            "build-commands": [
-                "go build -v -o ./bin/git-lfs ./git-lfs.go",
-                "install -Dm0755 -t ${FLATPAK_DEST}/bin/ ./bin/git-lfs"
+            "name":"git-lfs",
+            "buildsystem":"simple",
+            "build-commands":[
+                "PREFIX=${FLATPAK_DEST} ./install.sh"
             ],
-            "sources": [
+            "sources":[
                 {
-                    "type": "archive",
-                    "url": "https://github.com/git-lfs/git-lfs/releases/download/v3.2.0/git-lfs-v3.2.0.tar.gz",
-                    "sha256": "f8e6bbe043b97db8a5c16da7289e149a3fed9f4d4f11cffcc6e517c7870cd9e5",
-                    "x-checker-data": {
-                        "type": "json",
-                        "url": "https://api.github.com/repos/git-lfs/git-lfs/releases/latest",
-                        "version-query": ".tag_name | sub(\"^[vV]\";\"\")",
-                        "url-query": ".assets[] | select(.label==\"Source\") | .browser_download_url"
+                    "type":"archive",
+                    "strip-components":1,
+                    "url":"https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-amd64-v3.3.0.tar.gz",
+                    "sha256":"6a4e6bd7d06d5c024bc70c8ee8c9da143ffc37d2646e252a17a6126d30cdebc1",
+                    "only-arches":[
+                        "x86_64"
+                    ],
+                    "x-checker-data":{
+                        "type":"json",
+                        "url":"https://api.github.com/repos/git-lfs/git-lfs/releases/latest",
+                        "url-query":".assets[] | select(.name==\"git-lfs-linux-amd64-\" + $version + \".tar.gz\") | .browser_download_url",
+                        "version-query":".tag_name"
+                    }
+                },
+                {
+                    "type":"archive",
+                    "strip-components":1,
+                    "url":"https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-arm64-v3.3.0.tar.gz",
+                    "sha256":"e97c477981a9b6a40026cadc1bf005541d973fc32df2de2f398643b15df6b5c6",
+                    "only-arches":[
+                        "aarch64"
+                    ],
+                    "x-checker-data":{
+                        "type":"json",
+                        "url":"https://api.github.com/repos/git-lfs/git-lfs/releases/latest",
+                        "url-query":".assets[] | select(.name==\"git-lfs-linux-arm64-\" + $version + \".tar.gz\") | .browser_download_url",
+                        "version-query":".tag_name"
                     }
                 }
             ]
         },
         {
-            "name": "gitkraken",
-            "buildsystem": "simple",
-            "build-commands": [
+            "name":"gitkraken",
+            "buildsystem":"simple",
+            "build-commands":[
                 ". ${FLATPAK_BUILDER_BUILDDIR}/build"
             ],
-            "sources": [
+            "sources":[
                 {
-                    "type": "file",
-                    "path": "apply_extra.sh"
+                    "type":"file",
+                    "path":"apply_extra.sh"
                 },
                 {
-                    "type": "file",
-                    "path": "gitkraken-build.sh",
-                    "dest-filename": "build"
+                    "type":"file",
+                    "path":"gitkraken-build.sh",
+                    "dest-filename":"build"
                 },
                 {
-                    "type": "file",
-                    "path": "gitkraken.sh"
+                    "type":"file",
+                    "path":"gitkraken.sh"
                 },
                 {
-                    "type": "file",
-                    "path": "com.axosoft.GitKraken.metainfo.xml"
+                    "type":"file",
+                    "path":"com.axosoft.GitKraken.metainfo.xml"
                 },
                 {
-                    "type": "file",
-                    "dest-filename": "gitkraken.deb",
-                    "url": "https://release.axocdn.com/linux/GitKraken-v9.0.0.deb",
-                    "sha256": "9c690ecf4f49d07a26e36f6e6300d68553c2a383c4bc270d18e2f923d97ca6f2",
-                    "x-checker-data": {
-                        "type": "html",
-                        "url": "https://www.gitkraken.com/download",
-                        "version-pattern": "Latest release: ((?:\\d+\\.)?(?:\\d+\\.)?\\d+)",
-                        "url-template": "https://release.axocdn.com/linux/GitKraken-v$version.deb"
+                    "type":"file",
+                    "dest-filename":"gitkraken.deb",
+                    "url":"https://release.axocdn.com/linux/GitKraken-v9.0.0.deb",
+                    "sha256":"9c690ecf4f49d07a26e36f6e6300d68553c2a383c4bc270d18e2f923d97ca6f2",
+                    "x-checker-data":{
+                        "type":"html",
+                        "url":"https://www.gitkraken.com/download",
+                        "version-pattern":"Latest release: ((?:\\d+\\.)?(?:\\d+\\.)?\\d+)",
+                        "url-template":"https://release.axocdn.com/linux/GitKraken-v$version.deb"
                     }
                 },
                 {
-                    "type": "extra-data",
-                    "filename": "gitkraken.deb",
-                    "url": "https://release.axocdn.com/linux/GitKraken-v9.0.0.deb",
-                    "sha256": "9c690ecf4f49d07a26e36f6e6300d68553c2a383c4bc270d18e2f923d97ca6f2",
-                    "size": 94465272,
-                    "x-checker-data": {
-                        "type": "html",
-                        "url": "https://www.gitkraken.com/download",
-                        "version-pattern": "Latest release: ((?:\\d+\\.)?(?:\\d+\\.)?\\d+)",
-                        "url-template": "https://release.axocdn.com/linux/GitKraken-v$version.deb",
-                        "is-main-source": true
+                    "type":"extra-data",
+                    "filename":"gitkraken.deb",
+                    "url":"https://release.axocdn.com/linux/GitKraken-v9.0.0.deb",
+                    "sha256":"9c690ecf4f49d07a26e36f6e6300d68553c2a383c4bc270d18e2f923d97ca6f2",
+                    "size":94465272,
+                    "x-checker-data":{
+                        "type":"html",
+                        "url":"https://www.gitkraken.com/download",
+                        "version-pattern":"Latest release: ((?:\\d+\\.)?(?:\\d+\\.)?\\d+)",
+                        "url-template":"https://release.axocdn.com/linux/GitKraken-v$version.deb",
+                        "is-main-source":true
                     }
                 }
             ]
